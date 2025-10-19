@@ -2,9 +2,8 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "prasanth/todo-webapp:latest"
+    IMAGE_NAME = "prasanthr25/todo-webapp:latest"   // ✅ Use your Docker Hub username
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') 
-    // Create this in Jenkins > Manage Jenkins > Credentials
   }
 
   stages {
