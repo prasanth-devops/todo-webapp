@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "prasanthR25/todo-webapp:latest"
+        IMAGE_NAME = "prasanthr25/todo-webapp:latest"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
     }
 
