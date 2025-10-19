@@ -1,26 +1,36 @@
 pipeline {
   agent any
+
+  environment {
+    IMAGE_NAME = "prasanth/todo-webapp:latest"
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') 
+    // Create this in Jenkins > Manage Jenkins > Credentials
+  }
+
   stages {
     stage('Checkout') {
       steps {
         git 'https://github.com/prasanth-devops/todo-webapp.git'
       }
     }
-    stage('Install') {
+
+    stage('Install Dependencies') {
       steps {
         sh 'npm install'
       }
     }
+
     stage('Build Docker Image') {
       steps {
-        sh 'docker build -t prasanth/todo-webapp:latest .'
+        sh 'docker build -t $IMAGE_NAME .'
       }
     }
+
     stage('Push to Docker Hub') {
       steps {
         sh '''
-          docker login -u <your-dockerhub-username> -p <your-password>
-          docker push prasanth/todo-webapp:latest
+          echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin
+          docker push $IMAGE_NAME
         '''
       }
     }
